@@ -10,19 +10,24 @@ namespace GeometriaWebApi.Controllers
     public class GeometriaController : ControllerBase
     {
 
-        static List<FiguraDto> figuraDtos = new List<FiguraDto> { new FiguraDto { Id=1,Ancho=25,Area=56, Tipo=4},new FiguraDto {Tipo=65,Area=33,Ancho=36,Id=352 } };
+        static List<FiguraDto> figuras = new List<FiguraDto> { new FiguraDto { Id=1,Ancho=25,Area=56, Tipo=4},new FiguraDto {Tipo=65,Area=33,Ancho=36,Id=352 } };
         // GET: api/<GeometriaController>
-        [HttpGet]
-        public IEnumerable<FiguraDto> Get()
+        [HttpGet(Name = "Geometria")]
+        public ActionResult<List<FiguraDto>> Get()
         {
-            return figuraDtos;
+            if (figuras.Any()==false)
+            {
+                return NotFound("No se encontraron figuras");
+            }
+            return figuras;
         }
 
         // GET api/<GeometriaController>/5
         [HttpGet("{id}")]
+        
         public FiguraDto Get(int id)
         {
-            return (from f in figuraDtos where f.Id == id select f).FirstOrDefault();
+            return (from f in figuras where f.Id == id select f).FirstOrDefault();
         }
 
         // POST api/<GeometriaController>
